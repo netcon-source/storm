@@ -36,8 +36,8 @@
       (^void execute [this ^Tuple tuple]
              (let [^RotatingMap pending (.getObject pending)
                    stream-id (.getSourceStreamId tuple)]
-               (if (= stream-id Constants/SYSTEM_TICK_STREAM_ID)
-                 (.rotate pending)
+               (condp = stream-id
+                 Constants/SYSTEM_TICK_STREAM_ID (.rotate pending)
                  (let [id (.getValue tuple 0)
                        ^OutputCollector output-collector (.getObject output-collector)
                        curr (.get pending id)
